@@ -42,7 +42,7 @@ const Main = () => {
           ...state,
           image: reader.result,
         });
-      };
+      }; 
       reader.readAsDataURL(e.target.files[0]);
     }
   };
