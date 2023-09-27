@@ -5,17 +5,17 @@ import { CgMergeVertical, CgMergeHorizontal } from "react-icons/cg";
 import { IoMdUndo, IoMdRedo, IoIosImage } from "react-icons/io";
 const Main = () => {
   const filterElement = [
-    { name: "brightness",maxValue:200 },
-    { name: "grayscale",maxValue:200 },
-    { name: "sepia",maxValue:200 },
-    { name: "saturate",maxValue:200 },
-    { name: "contrast",maxValue:200 },
+    { name: "brightness", maxValue: 200 },
+    { name: "grayscale", maxValue: 200 },
+    { name: "sepia", maxValue: 200 },
+    { name: "saturate", maxValue: 200 },
+    { name: "contrast", maxValue: 200 },
     { name: "hueRotate" },
   ];
-  const[property,setProperty] = useState(
-    { name: "brightness",maxValue:200 }
-
-  )
+  const [property, setProperty] = useState({
+    name: "brightness",
+    maxValue: 200,
+  });
   const [state, setState] = useState({
     image: "",
     brightness: 70,
@@ -25,13 +25,49 @@ const Main = () => {
     contrast: 100,
     hueRotate: 0,
     rotate: 0,
-    vartical: 1,
+    vertical: 1,
     horizontal: 1,
   });
-  const inputHandle=(e)=>{
+  const inputHandle = (e) => {
     setState({
-        ...state,
-        [e.target.name]:e.target.value
+      ...state,
+      [e.target.name]: e.target.value
+    });
+  };
+  const leftRotate = ()=>{
+    setState({
+      ...state,
+      rotate:state.rotate - 90
+    })
+  }
+  // const inputHandle = (e) => {
+  //   setState({
+  //     ...state,
+  //     [e.target.name]: e.target.value
+  //   });
+  // };
+  // const leftRotate = ()=>{
+  //   setState({
+  //     ...state,
+  //     rotate:state.rotate - 90
+  //   })
+  // }
+  const rightRotate = ()=>{
+    setState({
+      ...state,
+      rotate:state.rotate + 90
+    })
+  }
+  const verticalFlip = ()=>{
+    setState({
+      ...state,
+      vertical:state.vertical === 1 ? -1 : 1
+    })
+  }
+  const horizontalFlip = ()=>{
+    setState({
+      ...state,
+      horizontal:state.horizontal === 1 ? -1 : 1
     })
   }
   const imageHandle = (e) => {
@@ -42,7 +78,7 @@ const Main = () => {
           ...state,
           image: reader.result,
         });
-      }; 
+      };
       reader.readAsDataURL(e.target.files[0]);
     }
   };
@@ -59,7 +95,13 @@ const Main = () => {
                 <span>Filters</span>
                 <div className="filter_key">
                   {filterElement.map((v, i) => (
-                    <button className={property.name=== v.name ? 'active':' '} onClick={()=>setProperty(v)} key={i}>{v.name}</button>
+                    <button
+                      className={property.name === v.name ? "active" : " "}
+                      onClick={() => setProperty(v)}
+                      key={i}
+                    >
+                      {v.name}
+                    </button>
                   ))}
                 </div>
               </div>
@@ -68,21 +110,27 @@ const Main = () => {
                   <label htmlFor="range">Rotate</label>
                   <span>100%</span>
                 </div>
-                <input name={property.name} onChange={inputHandle} value={state[property.name]} max={property.maxValue} type="range" />
+                <input
+                  name={property.name}
+                  onChange={inputHandle}
+                  value={state[property.name]}
+                  max={property.maxValue}
+                  type="range"
+                />
               </div>
               <div className="rotate">
                 <label htmlFor="">Rotate & Flip</label>
                 <div className="icon">
-                  <div>
+                  <div onClick={leftRotate}>
                     <GrRotateLeft />
                   </div>
-                  <div>
+                  <div onClick={rightRotate}>
                     <GrRotateRight />
                   </div>
-                  <div>
+                  <div onClick={verticalFlip}>
                     <CgMergeVertical />
                   </div>
-                  <div>
+                  <div onClick={horizontalFlip}>
                     <CgMergeHorizontal />
                   </div>
                 </div>
@@ -98,9 +146,8 @@ const Main = () => {
               {state.image ? (
                 <img
                   style={{
-                    filter: `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.hueRotate}%)`,
-                    transform: `rotate(${state.rotate}deg)scale(${state.vartical},scale(${state.horizontal}))`,
-                  }}
+                    filter: `brightness(${state.brightness}%) grayscale(${state.grayscale}%) sepia(${state.sepia}%) 
+                    saturate(${state.saturate}%) contrast(${state.contrast}%) hue-rotate(${state.hueRotate}deg)`,transform:`rotate(${state.rotate}deg) scale(${state.vertical},${state.horizontal})`}}
                   src={state.image}
                   alt=""
                 />
