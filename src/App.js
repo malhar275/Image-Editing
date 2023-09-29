@@ -1,4 +1,3 @@
- 
 import Main from './Components/Main';
 
 function App() {
