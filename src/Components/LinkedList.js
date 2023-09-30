@@ -31,7 +31,7 @@ class linkedList{
 
     }
     undoEdit=()=>{
-        const preData = this.current.pre // checks if previous data id there or not
+        const preData = this.current.pre // checks if previous data id there or not before the current node
         if(preData){
             this.current=preData // updates current node to preData and then retur data stored in preData
             return preData.data
@@ -41,7 +41,7 @@ class linkedList{
         }
     }
     redoEdit=()=>{
-        const nextData = this.current.next
+        const nextData = this.current.next //check if next data is there or not after current node
         if(nextData){
             this.current=nextData
             return nextData.data
@@ -51,5 +51,5 @@ class linkedList{
         }
     }
 }
-const storeData=new linkedList() // new instance of linkedList
+const storeData=new linkedList() // new instance of linkedlist
 export default storeData;
