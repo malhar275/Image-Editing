@@ -5,7 +5,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('https://img.freepik.com/free-photo/watercolor-paper-texture_1194-6307.jpg?size=626&ext=jpg&ga=GA1.1.98772698.1695909685&semt=ais');
+  background-image: url('background.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -19,8 +19,10 @@
       text-align: center;
       padding-bottom: 15px;
       h1 {
-        text-transform: uppercase;
-        color: #000080;
+        text-transform:capitalize;
+        color: #992E17;
+        font-size: 50px;
+        // color:#4B5320;
         // color:#343A40;
       }
     }
@@ -28,14 +30,14 @@
       display: flex;
       justify-content: center;
       .sidebar {
-        .reset{
+        .reset {
           margin-top: 20px;
-          .save{
+          .save {
             background-color: #e335f3 !important;
             margin-left: 5px;
           }
-          button{
-            background-color: rgb(242,53,85);
+          button {
+            background-color: rgb(242, 53, 85);
             padding: 8px;
             border-radius: 3px;
             outline: none;
@@ -55,7 +57,7 @@
         }
         .side_body {
           width: 300px;
-          border: 1.5px solid gray;
+          border: 1px solid gray;
           margin-right: 8px;
           height: 350px;
           padding: 10px;
@@ -68,7 +70,7 @@
               color: red;
             }
             button.active {
-              background-color:#4a55f3;
+              background-color: #4a55f3;
               color: white;
             }
             button {
@@ -185,7 +187,7 @@
             padding: 5px 10px;
             font-size: 23px;
           }
-          label{
+          label {
             background-color: #115811;
             margin-left: 5px;
           }

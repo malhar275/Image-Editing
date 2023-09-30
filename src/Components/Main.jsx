@@ -5,7 +5,9 @@ import "react-image-crop/dist/ReactCrop.css";
 import { GrRotateLeft, GrRotateRight } from "react-icons/gr";
 import { CgMergeVertical, CgMergeHorizontal } from "react-icons/cg";
 import { IoMdUndo, IoMdRedo, IoIosImage } from "react-icons/io";
+import storeData from "./LinkedList";
 const Main = () => {
+  // an array of filter options with their max values
   const filterElement = [
     { name: "brightness", maxValue: 200 },
     { name: "grayscale", maxValue: 200 },
@@ -14,6 +16,7 @@ const Main = () => {
     { name: "contrast", maxValue: 200 },
     { name: "hue-Rotate" },
   ];
+  // define main state variable using useState
   const [property, setProperty] = useState({
     name: "brightness",
     maxValue: 200,
@@ -42,7 +45,12 @@ const Main = () => {
     setState({
       ...state,
       rotate: state.rotate - 90,
-    });
+    })
+
+    const stateData=state
+    stateData.rotate=state.rotate - 90
+
+    storeData.insert(stateData)
   };
   // const inputHandle = (e) => {
   //   setState({
@@ -60,20 +68,47 @@ const Main = () => {
     setState({
       ...state,
       rotate: state.rotate + 90,
-    });
+    })
+    const stateData=state
+    stateData.rotate=state.rotate + 90
+
+    storeData.insert(stateData)
   };
   const verticalFlip = () => {
     setState({
       ...state,
       vertical: state.vertical === 1 ? -1 : 1,
-    });
+    })
+    const stateData=state
+    stateData.vertical=state.vertical === 1 ? -1 : 1
+
+    storeData.insert(stateData)
   };
   const horizontalFlip = () => {
     setState({
       ...state,
       horizontal: state.horizontal === 1 ? -1 : 1,
-    });
+    })
+    const stateData=state
+    stateData.horizontal=state.horizontall === 1 ? -1 : 1
+
+    storeData.insert(stateData)
   };
+  const redo = ()=>{
+    const data=storeData.redoEdit()
+    if(data){
+      setState(data)
+    }
+    console.log(data)
+  }
+  const undo = ()=>{
+    const data=storeData.undoEdit()
+    if(data){
+      setState(data)
+    }
+    console.log(data)
+
+  }
   const imageHandle = (e) => {
     if (e.target.files.length !== 0) {
       const reader = new FileReader();
@@ -82,6 +117,19 @@ const Main = () => {
           ...state,
           image: reader.result,
         });
+        const stateData = {
+          image: reader.result,
+          brightness: 100,
+          grayscale: 0,
+          sepia: 0,
+          saturate: 100,
+          contrast: 100,
+          hueRotate: 0,
+          rotate: 0,
+          vertical: 1,
+          horizontal: 1,
+        }
+        storeData.insert(stateData)
       };
       reader.readAsDataURL(e.target.files[0]);
     }
@@ -151,7 +199,7 @@ const Main = () => {
     <div className="image_editor">
       <div className="card">
         <div className="card_header">
-          <h1>---- Image Editor ----</h1>
+          <h1>---- PicPerfect ----</h1>
         </div>
         <div className="card_body">
           <div className="sidebar">
@@ -231,10 +279,10 @@ const Main = () => {
               )}
             </div>
             <div className="image_select">
-              <button className="undo">
+              <button onClick={undo} className="undo">
                 <IoMdUndo />
               </button>
-              <button className="redo">
+              <button onClick={redo} className="redo">
                 <IoMdRedo />
               </button>
               {crop && (
